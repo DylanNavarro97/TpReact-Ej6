@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 
-export const Card = ({ color }) => {
+export const Card = ({ color, handleErase }) => {
   return (
     <>
       <div className="cardColor shadow-lg">
@@ -12,7 +12,7 @@ export const Card = ({ color }) => {
           ></div>
         </div>
         <div className="cardFooter p-2 text-end">
-          <Button variant="danger">Borrar</Button>
+          <Button variant="danger" onClick={() => handleErase(color)}>Borrar</Button>
         </div>
       </div>
     </>

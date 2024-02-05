@@ -21,19 +21,28 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (nombreColorIngresado.length >= 3) {
-      alert("Color agregado correctamente");
-      guardarColor();
-      setNombreColorIngresado("");
 
-      setColorSeleccionado("#0000ff");
+    
+
+    if (nombreColorIngresado.length >= 3) {
+      if (!verificarNombre()){
+        alert("Color agregado correctamente");
+        guardarColor();
+        setNombreColorIngresado("");
+  
+        setColorSeleccionado("#0000ff");
+      } else {
+        alert("Ese color ya fue ingresado")
+      }
+      
     } else {
       alert("Ingresa un nombre de color válido");
     }
   };
 
-  const handleErase = () => {
-    
+  const handleErase = (objetoColor) => {
+    const coloresFiltrados = colores.filter((color) => color.nombre !== objetoColor.nombre)
+    setColores(coloresFiltrados)
   }
 
   const guardarColor = () => {
@@ -44,6 +53,16 @@ function App() {
 
     setColores([...colores, color]);
   };
+
+  const verificarNombre = () => {
+    const nombreFiltrado = colores.filter((color) => color.nombre === nombreColorIngresado)
+
+    if (nombreFiltrado.length > 0){
+      return true
+    } else {
+      return false
+    }
+  }
 
   return (
     <>
@@ -65,8 +84,8 @@ function App() {
             <section className="d-flex w-75">
               <div className="d-flex flex-wrap">
                 {colores.map((color, i) => (
-                  <div className="my-4 me-3 d-flex">
-                    <Card className="mt-3" color={color} key={i} />
+                  <div className="my-4 me-3 d-flex" key={i}>
+                    <Card className="mt-3" color={color} handleErase={handleErase} />
                   </div>
                 ))}
               </div>
